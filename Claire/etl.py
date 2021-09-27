@@ -30,8 +30,8 @@ def mm_impute(df, mode_cols, mean_cols):
 
 if __name__ == "__main__":
     warnings.filterwarnings('ignore')
-    input_path = input("Path of file to be cleaned:")
-    output_path = input('Filepath of the cleaned file:')
+    input_path = input("Path of file to be cleaned: ")
+    output_path = input('Filepath of the cleaned file: ')
     df = pd.read_csv(input_path)
     print('Finished reading in the file!')
     df_new = pd.DataFrame()
@@ -43,6 +43,7 @@ if __name__ == "__main__":
     df = df_new[(df_new['OFFGUIDE'] == 9) | (df_new['OFFGUIDE'] == 10)]
     df = mm_impute(df, categorical_cols, numeric_cols)
     df = df[df.columns[df.isnull().sum() < 10000]]
+    df.columns = [col.lower() for col in df.columns]
     df.to_csv(output_path, index = False)
     print('Your cleaned file can be found at', output_path)
 
